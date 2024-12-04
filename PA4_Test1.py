@@ -3,6 +3,16 @@ import openai
 import pandas as pd
 from openai import OpenAIError
 
+response = openai.ChatCompletion.create(
+    model="gpt-3.5-turbo",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "Hello!"}
+    ]
+)
+
+print(response['choices'][0]['message']['content'])
+
 # Sidebar Input
 st.sidebar.title("NLP Story Generator")
 api_key = st.sidebar.text_input("Enter your OpenAI API Key:", type="password")
