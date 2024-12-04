@@ -21,13 +21,15 @@ style = st.selectbox("เลือกสไตล์ของนิทาน", [
 if st.button("สร้างนิทาน"):
     if not keywords:
         st.error("กรุณากรอกคีย์เวิร์ด")
+    elif not api_key:
+        st.error("กรุณากรอก API Key ใน Sidebar")
     else:
         # Prompt สำหรับแต่งนิทาน
         thai_prompt = f"เขียนนิทาน 10 บรรทัดโดยใช้คำต่อไปนี้: {keywords} และให้มีสไตล์ {style}"
         
-        # เรียกใช้ ChatGPT API เพื่อแต่งนิทาน
         try:
-            response = openai.ChatCompletion.acreate(
+            # เรียกใช้ ChatGPT API เพื่อแต่งนิทาน
+            response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=[{"role": "user", "content": thai_prompt}]
             )
@@ -51,5 +53,8 @@ if st.button("สร้างนิทาน"):
             data = pd.DataFrame({"ภาษาไทย": [story_thai], "ภาษาอังกฤษ": [story_english]})
             csv = data.to_csv(index=False).encode("utf-8")
             st.download_button("ดาวน์โหลดผลลัพธ์ (CSV)", data=csv, file_name="story.csv", mime="text/csv")
+        
+        except openai.error.OpenAIError as e:
+            st.error(f"เกิดข้อผิดพลาดจาก OpenAI API: {e}")
         except Exception as e:
             st.error(f"เกิดข้อผิดพลาด: {e}")
