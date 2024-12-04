@@ -1,7 +1,7 @@
 import streamlit as st
 import openai
 import pandas as pd
-from openai.error import OpenAIError
+from openai import OpenAIError
 
 # Sidebar Input
 st.sidebar.title("NLP Story Generator")
