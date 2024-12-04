@@ -3,16 +3,6 @@ import openai
 import pandas as pd
 from openai import OpenAIError
 
-response = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo",
-    messages=[
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": "Hello!"}
-    ]
-)
-
-print(response['choices'][0]['message']['content'])
-
 # Sidebar Input
 st.sidebar.title("NLP Story Generator")
 api_key = st.sidebar.text_input("Enter your OpenAI API Key:", type="password")
@@ -37,7 +27,7 @@ if st.button("สร้างนิทาน"):
         try:
             thai_prompt = f"เขียนนิทาน 10 บรรทัดโดยใช้คำต่อไปนี้: {keywords} และให้มีสไตล์ {style}"
             response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
+                model="gpt-4.0-mini",
                 messages=[{"role": "user", "content": thai_prompt}]
             )
             story_thai = response['choices'][0]['message']['content']
