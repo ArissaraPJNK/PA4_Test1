@@ -27,7 +27,7 @@ if st.button("สร้างนิทาน"):
         
         # เรียกใช้ ChatGPT API เพื่อแต่งนิทาน
         try:
-            response = openai.ChatCompletion.create(
+            response = openai.ChatCompletion.acreate(
                 model="gpt-3.5-turbo",
                 messages=[{"role": "user", "content": thai_prompt}]
             )
